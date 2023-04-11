@@ -1,16 +1,19 @@
 from pytube import YouTube
-import tkinter
+import streamlit as st
 
-root = tkinter.Tk()
 
-screen = tkinter.Entry(root)
-screen.insert(0,"enter youtube video url")
-screen.pack()
+st.header(":blue[Fetch by Tarmica]")
+
+screen = st.text_input("Enter YouTube Link and click download")
+
+download_button  = st.button(label="download")
+
+
+
 def downloadd():
-    video=screen.get()
-    YouTube(video).streams.first().download(output_path=r'C:\Users\im_bradley\Downloads')
-download_button= tkinter.Button(root, command=downloadd, text="Download")
-download_button.pack()
+    YouTube(screen).streams.first().download(output_path=r'C:\Users\tarim\Downloads')
+    st.write("downloading into C:\Users\tarim\Downloads")
+    
+if download_button:
+    downloadd()
 
-
-root.mainloop()
