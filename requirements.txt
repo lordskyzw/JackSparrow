@@ -1,5 +1,4 @@
 pytube
 streamlit
-base64
 pyngrok
 uuid
