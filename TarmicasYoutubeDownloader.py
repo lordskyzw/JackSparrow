@@ -1,39 +1,25 @@
-import os
 from pytube import YouTube
 import streamlit as st
 
+st.header(":blue[Tarmica & The Carribean Pirates]")
 
-st.header(":blue[Tarmica & the Carribean Pirates]")
+# Allow user to select whether to download video or audio file
+file_type = st.radio("Select file type", ("Video", "Audio"))
 
-screen = st.text_input("Enter YouTube Link")
-download_button = st.button("Download")
+# Get YouTube link from user
+screen = st.text_input("Enter YouTube link")
 
-options = ["Video", "Audio"]
-choice = st.radio("Select download option:", options)
-
-
-def download_video():
-    yt = YouTube(screen)
-    download_path = os.path.join(
-        os.path.expanduser("~"), "Downloads", "Fetch by Tarmica"
-    )
-    yt.streams.filter(progressive=True, file_extension="mp4").order_by(
-        "resolution"
-    ).desc().first().download(output_path=download_path)
-    st.write("Video downloaded into " + download_path)
-
-
-def download_audio():
-    yt = YouTube(screen)
-    download_path = os.path.join(
-        os.path.expanduser("~"), "Downloads", "Fetch by Tarmica"
-    )
-    yt.streams.filter(only_audio=True).first().download(output_path=download_path)
-    st.write("Audio downloaded into " + download_path)
-
-
-if download_button:
-    if choice == "Video":
-        download_video()
-    else:
-        download_audio()
+# Download file when user clicks the download button
+if st.button("Download"):
+    if file_type == "Video":
+        # Download video file
+        video = YouTube(screen)
+        stream = video.streams.get_highest_resolution()
+        stream.download()
+        st.write("Video file downloaded")
+    elif file_type == "Audio":
+        # Download audio file
+        video = YouTube(screen)
+        stream = video.streams.get_audio_only()
+        stream.download()
+        st.write("Audio file downloaded")
