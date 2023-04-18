@@ -14,7 +14,12 @@ if st.button("Download"):
     if file_type == "Video":
         # Download video file
         video = YouTube(screen)
-        stream = video.streams.get_highest_resolution()
+        stream = (
+            video.streams.filter(progressive=True, file_extension="mp4")
+            .order_by("resolution")
+            .desc()
+            .first()
+        )
         stream.download()
         st.write("Video file downloaded")
     elif file_type == "Audio":
