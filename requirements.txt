@@ -1,4 +1,4 @@
-pytube
-streamlit
-pyngrok
-uuid
+streamlit==0.87.0
+pytube==11.0.1
+base64==0.5.1
+uuid==1.30
