@@ -3,7 +3,7 @@ from pytube import YouTube
 import streamlit as st
 
 
-st.header(":blue[Fetch by Tarmica]")
+st.header(":blue[Tarmica & the Carribean Pirates]")
 
 screen = st.text_input("Enter YouTube Link")
 download_button = st.button("Download")
