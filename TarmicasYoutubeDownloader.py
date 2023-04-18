@@ -1,30 +1,33 @@
-from pytube import YouTube
+import base64
 import streamlit as st
+import pytube
+import uuid
+import os
 
-st.header(":blue[Tarmica & The Carribean Pirates]")
+st.set_page_config(page_title="Tarmic's YouTube Downloader", page_icon=":arrow_down:")
 
-# Allow user to select whether to download video or audio file
-file_type = st.radio("Select file type", ("Video", "Audio"))
+st.title("Tarmic's YouTube Downloader")
 
-# Get YouTube link from user
-screen = st.text_input("Enter YouTube link")
+url = st.text_input("Enter the YouTube video URL below", "")
+if url:
+    try:
+        video = pytube.YouTube(url)
 
-# Download file when user clicks the download button
-if st.button("Download"):
-    if file_type == "Video":
-        # Download video file
-        video = YouTube(screen)
-        stream = (
-            video.streams.filter(progressive=True, file_extension="mp4")
-            .order_by("resolution")
-            .desc()
-            .first()
+        st.write("Title:", video.title)
+        st.write("Length:", video.length, "seconds")
+
+        with st.spinner("Downloading..."):
+            stream = video.streams.get_highest_resolution()
+            file_id = str(uuid.uuid4())
+            stream.download(filename=file_id)
+        st.success("Download Successful!")
+
+        file_path = os.path.join(os.getcwd(), f"{file_id}.mp4")
+        st.write("Download link:")
+        st.markdown(
+            f'<a href="data:file/mp4;base64,{base64.b64encode(open(file_path, "rb").read()).decode()}" download="{video.title}.mp4">Generate link</a>',
+            unsafe_allow_html=True,
         )
-        stream.download()
-        st.write("Video file downloaded")
-    elif file_type == "Audio":
-        # Download audio file
-        video = YouTube(screen)
-        stream = video.streams.get_audio_only()
-        stream.download()
-        st.write("Audio file downloaded")
+
+    except pytube.exceptions.PytubeError as e:
+        st.error(str(e))
