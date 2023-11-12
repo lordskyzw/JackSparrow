@@ -1,0 +1,23 @@
+{
+    "manifest_version": 2,
+    "name": "YouTube Downloader",
+    "version": "1.0",
+    "description": "Download videos from YouTube",
+    "permissions": [
+      "activeTab"
+    ],
+    "browser_action": {
+      "default_popup": "popup.html",
+      "default_icon": {
+        "16": "icons/icon16.png",
+        "48": "icons/icon48.png",
+        "128": "icons/icon128.png"
+      }
+    },
+    "icons": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  }
+  
