@@ -1,4 +1,4 @@
-# YouTube Video Downloader extension
+# YouTube Video Downloader Firefox extension
 
 This is a simple YouTube video downloader firefox extension
 ## Installation
